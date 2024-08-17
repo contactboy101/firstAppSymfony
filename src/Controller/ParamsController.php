@@ -31,7 +31,7 @@ class ParamsController extends AbstractController
             // Sauvegarder les données du formulaire dans la base de données
             $entityManager->persist($user);
             $entityManager->flush();
-
+            $this->addFlash('success', 'Utilisateur modifié avec succès !');
             return $this->redirectToRoute('app_users');
         }
 

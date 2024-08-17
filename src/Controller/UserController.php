@@ -28,7 +28,6 @@ class UserController extends AbstractController
         //dd($userRepository);
         $allParams = $request->query->all();
         $allUsers = $userRepository->findAll();
-        
         return $this->render('user/users.html.twig', [
             'allUsers' => $allUsers,
         ]);
@@ -45,8 +44,8 @@ class UserController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 // Sauvegarder les données du formulaire dans la base de données
                 $entityManager->persist($user);
-                $entityManager->flush();
-    
+                $entityManager->flush();                
+                $this->addFlash('success', 'Utilisateur ajouté avec succès !');
                 return $this->redirectToRoute('app_users');
             }
     
@@ -63,6 +62,7 @@ class UserController extends AbstractController
         $user = $entityManager->getRepository(User::class)->find($id);
         $entityManager->remove($user);
         $entityManager->flush();
+        $this->addFlash('alert', 'Utilisateur supprimé avec succès !');
         return $this->redirectToRoute('app_users');
     }
 }
