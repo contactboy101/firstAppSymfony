@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste UserController!{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>Liste des utilisateurs</h1>
+    <a href={{url('add_user')}} class="btn btn-primary">Nouveau utilisateur</a>
+    <div id='list'>
+        <div class='row'>
+            <div class="col-md-4">
+                Nom
+            </div>
+            <div class="col-md-4">
+                Edit
+            </div>
+            <div class="col-md-4">
+                Supprimer
+            </div>
+        </div>
+        {% for user in allUsers %}
+        <div class='row'>
+            <div class="col-md-4">
+                {{ user.login }}
+            </div>
+            <div class="col-md-4">
+               <a class="nav-link" href="{{ url('app_params', {'id': user.id, 'slug': user.login}) }}">Edit</a>
+            </div>
+            <div class="col-md-4">
+                <a class="nav-link" href="{{ url('delete_user', {'id': user.id}) }}">Delete</a>
+            </div>
+        </div>
+         {% endfor %}
+    </div>
+</div>
+{% endblock %}
