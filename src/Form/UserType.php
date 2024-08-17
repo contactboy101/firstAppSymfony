@@ -7,7 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class UserType extends AbstractType
 {
@@ -15,7 +17,17 @@ class UserType extends AbstractType
     {
         $builder
             ->add('login', TextType::class, ['label' => 'Nom utilisateur'])
-            ->add('password')
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => "Ce champ est obligatoire."]),
+                    new Assert\Length([
+                        'min' => 8,
+                        'minMessage' => 'Le mot de passe doit comporter plus de {{ limit }} caractères.',
+                    ]),
+                    
+                ],
+        ])
             ->add('description')
         ;
     }
